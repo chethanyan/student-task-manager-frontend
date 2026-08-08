@@ -1,63 +1,10 @@
-/* Dashboard */
-
-.dashboard {
-  width: 100%;
-}
-
-.dashboard-header {
+.app-layout {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
+  min-height: 100vh;
 }
 
-.dashboard-header h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.dashboard-header p {
-  margin-top: 8px;
-  color: #6b7280;
-}
-
-.add-task-btn {
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.add-task-btn:hover {
-  background-color: #1d4ed8;
-}
-
-/* Statistics */
-
-.stats-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.stat-card {
-  background-color: white;
-  padding: 22px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-}
-
-.stat-card p {
-  margin: 0;
-  color: #6b7280;
-  font-size: 14px;
-}
-
-.stat-card h2 {
-  margin: 12px 0 0;
-  font-size: 28px;
+.main-content {
+  flex: 1;
+  padding: 32px 40px;
+  overflow-y: auto;
 }

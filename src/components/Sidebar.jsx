@@ -1,4 +1,16 @@
+import './Sidebar.css';
+import { useNavigate } from "react-router-dom";
+
 function Sidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
+    navigate("/login");
+  };
+
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
@@ -13,7 +25,9 @@ function Sidebar() {
       </nav>
 
       <div className="sidebar-bottom">
-        <button className="menu-item">Settings</button>
+        <button className="menu-item" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </aside>
   );

@@ -1,13 +1,25 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
+import MyTasks from "./pages/MyTasks";
+import CalendarPage from "./pages/Calendar";
+import Completed from "./pages/Completed";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import "./App.css";
 
-function PrivateRoute({ children }) {
+function PrivateLayout() {
   const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/login" />;
+  if (!token) return <Navigate to="/login" />;
+
+  return (
+    <div className="app-layout">
+      <Sidebar />
+      <main className="main-content">
+        <Outlet />
+      </main>
+    </div>
+  );
 }
 
 function App() {
@@ -17,19 +29,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <div className="app">
-                <Sidebar />
-                <main className="main-content">
-                  <Dashboard />
-                </main>
-              </div>
-            </PrivateRoute>
-          }
-        />
+        <Route element={<PrivateLayout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/tasks" element={<MyTasks />} />
+          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/completed" element={<Completed />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

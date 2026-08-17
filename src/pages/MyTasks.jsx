@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { useTasks } from "../hooks/useTasks";
 import TaskForm from "../components/TaskForm";
 import TaskCard from "../components/TaskCard";
-import StatCard from "../components/StatCard";
 import "./Dashboard.css";
+import "./Tasks.css";
 
-function Dashboard() {
+const FILTERS = ["All", "Pending", "In Progress", "Completed"];
+
+function MyTasks() {
   const {
     tasks,
     loading,
@@ -18,55 +21,53 @@ function Dashboard() {
     handleDelete,
     handleStatusChange,
   } = useTasks();
+  const [filter, setFilter] = useState("All");
 
-  const total = tasks.length;
-  const pending = tasks.filter((t) => t.status === "Pending").length;
-  const inProgress = tasks.filter((t) => t.status === "In Progress").length;
-  const completed = tasks.filter((t) => t.status === "Completed").length;
+  const filteredTasks =
+    filter === "All" ? tasks : tasks.filter((t) => t.status === filter);
 
   return (
     <div className="dashboard">
       <div className="dashboard-header">
         <div>
-          <h1>Dashboard</h1>
-          <p className="subtitle">Here's an overview of your tasks.</p>
+          <h1>My Tasks</h1>
+          <p className="subtitle">Every task you're tracking, in one place.</p>
         </div>
         <button className="btn-add" onClick={openCreate}>
           + Add Task
         </button>
       </div>
 
-      {/* Stats */}
-      <div className="stats-row">
-        <StatCard title="Total Tasks" value={total} color="#3b82f6" />
-        <StatCard title="Pending" value={pending} color="#b45309" />
-        <StatCard title="In Progress" value={inProgress} color="#1d4ed8" />
-        <StatCard title="Completed" value={completed} color="#15803d" />
-      </div>
-
-      {/* Error Message */}
       {error && <p style={{ color: "#dc2626", marginBottom: 20 }}>{error}</p>}
 
-      {/* Add / Edit Task Form */}
       {showForm && (
         <TaskForm onSubmit={handleSave} onCancel={closeForm} initialData={editingTask} />
       )}
 
-      {/* Task List */}
-      <div className="tasks-section">
-        <div className="section-header">
-          <h3>Your Tasks</h3>
-        </div>
+      <div className="filter-tabs">
+        {FILTERS.map((f) => (
+          <button
+            key={f}
+            className={`filter-tab${filter === f ? " active" : ""}`}
+            onClick={() => setFilter(f)}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
 
+      <div className="tasks-section">
         {loading ? (
           <p className="subtitle">Loading tasks...</p>
-        ) : tasks.length === 0 ? (
+        ) : filteredTasks.length === 0 ? (
           <div className="empty-state">
-            No tasks yet. Click "+ Add Task" to create one.
+            {filter === "All"
+              ? 'No tasks yet. Click "+ Add Task" to create one.'
+              : `No ${filter.toLowerCase()} tasks.`}
           </div>
         ) : (
           <div className="task-list">
-            {tasks.map((task) => (
+            {filteredTasks.map((task) => (
               <TaskCard
                 key={task.id}
                 task={task}
@@ -82,4 +83,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default MyTasks;

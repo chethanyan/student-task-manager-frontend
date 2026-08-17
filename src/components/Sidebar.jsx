@@ -1,5 +1,12 @@
 import './Sidebar.css';
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
+const NAV_ITEMS = [
+  { label: "Dashboard", icon: "📊", to: "/" },
+  { label: "My Tasks", icon: "🗒️", to: "/tasks" },
+  { label: "Calendar", icon: "📅", to: "/calendar" },
+  { label: "Completed", icon: "✅", to: "/completed" },
+];
 
 function Sidebar() {
   const navigate = useNavigate();
@@ -13,19 +20,28 @@ function Sidebar() {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-logo">
-        <h2>TaskFlow</h2>
+      <div className="sidebar-brand">
+        <span className="brand-icon">🧭</span>
+        <h1>TaskFlow</h1>
       </div>
 
-      <nav className="sidebar-menu">
-        <button className="menu-item active">Dashboard</button>
-        <button className="menu-item">My Tasks</button>
-        <button className="menu-item">Calendar</button>
-        <button className="menu-item">Completed</button>
+      <nav className="sidebar-nav">
+        {NAV_ITEMS.map((item) => (
+          <NavLink
+            key={item.label}
+            to={item.to}
+            end={item.to === "/"}
+            className={({ isActive }) => `nav-item${isActive ? " active" : ""}`}
+          >
+            <span className="nav-icon">{item.icon}</span>
+            {item.label}
+          </NavLink>
+        ))}
       </nav>
 
-      <div className="sidebar-bottom">
-        <button className="menu-item" onClick={handleLogout}>
+      <div className="sidebar-footer">
+        <button className="nav-item" onClick={handleLogout}>
+          <span className="nav-icon">🚪</span>
           Logout
         </button>
       </div>

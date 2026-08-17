@@ -1,49 +1,42 @@
-function TaskCard({ task, onDelete, onStatusChange }) {
+import './TaskCard.css';
+
+const STATUS_CLASS = {
+  "Pending": "status-pending",
+  "In Progress": "status-progress",
+  "Completed": "status-completed",
+};
+
+function TaskCard({ task, onDelete, onStatusChange, onEdit }) {
   return (
-    <div
-      style={{
-        background: "white",
-        padding: 16,
-        borderRadius: 10,
-        marginBottom: 12,
-        border: "1px solid #e5e7eb",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <div>
-        <h4 style={{ margin: "0 0 6px 0" }}>{task.title}</h4>
-        <p style={{ margin: "0 0 6px 0", color: "#6b7280" }}>
+    <div className="task-card">
+      <div className="task-card-left">
+        <h4 className="task-title">{task.title}</h4>
+        <p className="task-description">
           {task.description || "No description"}
         </p>
-        <small>
-          Due: {task.dueDate || "—"} | Status: <strong>{task.status}</strong>
-        </small>
+        <div className="task-meta">
+          <span className={`status-badge ${STATUS_CLASS[task.status] || ""}`}>
+            {task.status}
+          </span>
+          <span className="due-date">Due: {task.dueDate || "—"}</span>
+        </div>
       </div>
 
-      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+      <div className="task-card-actions">
         <select
           value={task.status}
           onChange={(e) => onStatusChange(task.id, e.target.value)}
-          style={{ padding: "6px 10px" }}
         >
           <option value="Pending">Pending</option>
           <option value="In Progress">In Progress</option>
           <option value="Completed">Completed</option>
         </select>
 
-        <button
-          onClick={() => onDelete(task.id)}
-          style={{
-            background: "#ef4444",
-            color: "white",
-            border: "none",
-            padding: "6px 12px",
-            borderRadius: 6,
-            cursor: "pointer",
-          }}
-        >
+        <button className="btn-edit" onClick={() => onEdit(task)}>
+          Edit
+        </button>
+
+        <button className="btn-delete" onClick={() => onDelete(task.id)}>
           Delete
         </button>
       </div>

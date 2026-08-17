@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { register } from "../api/auth";
+import "./Auth.css";
 
 function Register() {
   const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -14,6 +16,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSubmitting(true);
 
     try {
       const res = await register(form);
@@ -23,40 +26,61 @@ function Register() {
       navigate("/");
     } catch (err) {
       setError(err.response?.data?.error || "Registration failed");
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "100px auto", padding: 20 }}>
-      <h2>Register</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-brand">
+          <span className="brand-icon">🧭</span>
+          <span className="brand-name">TaskFlow</span>
+        </div>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="username"
-          placeholder="Username"
-          value={form.username}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", padding: 10, marginBottom: 10 }}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", padding: 10, marginBottom: 10 }}
-        />
-        <button type="submit" style={{ width: "100%", padding: 10 }}>
-          Register
-        </button>
-      </form>
+        <h2>Create your account</h2>
+        <p className="auth-subtitle">Start tracking your tasks in minutes.</p>
 
-      <p style={{ marginTop: 15 }}>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+        {error && <div className="auth-error">{error}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="auth-field">
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              name="username"
+              placeholder="Choose a username"
+              value={form.username}
+              onChange={handleChange}
+              required
+              autoComplete="username"
+            />
+          </div>
+
+          <div className="auth-field">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Choose a password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              autoComplete="new-password"
+            />
+          </div>
+
+          <button type="submit" className="auth-submit" disabled={submitting}>
+            {submitting ? "Creating account..." : "Register"}
+          </button>
+        </form>
+
+        <p className="auth-footer">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
   );
 }

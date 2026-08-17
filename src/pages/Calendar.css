@@ -1,0 +1,139 @@
+.calendar-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.calendar-toolbar h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+  min-width: 180px;
+  text-align: center;
+}
+
+.calendar-nav-btn {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.calendar-nav-btn:hover {
+  background: #f1f5f9;
+}
+
+.calendar-today-btn {
+  margin-left: auto;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding-bottom: 6px;
+}
+
+.calendar-cell {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  min-height: 92px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  text-align: left;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  overflow: hidden;
+}
+
+.calendar-cell:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.calendar-cell.empty {
+  background: transparent;
+  border: none;
+}
+
+.calendar-cell.today {
+  border-color: #3b82f6;
+}
+
+.calendar-cell.today .cell-date {
+  color: #3b82f6;
+}
+
+.calendar-cell.selected {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.cell-date {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.cell-task {
+  font-size: 11px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  padding: 2px 6px;
+  border-radius: 6px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cell-more {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.calendar-agenda {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.calendar-agenda h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #0f172a;
+}
+
+.calendar-agenda ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calendar-agenda li {
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1e293b;
+}

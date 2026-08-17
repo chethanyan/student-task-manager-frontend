@@ -1,16 +1,118 @@
-# React + Vite
+# 📋 Student Task Manager — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite frontend for the Student Task Manager app with JWT Authentication,
+Study Dashboard, and area-wise task organization.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🛠️ Tech Stack
 
-## React Compiler
+| Layer | Technology |
+|---|---|
+| Framework | React 18 |
+| Build Tool | Vite |
+| API Calls | Axios |
+| Styling | CSS (custom) |
+| Auth | JWT (stored in localStorage) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ⚙️ Setup & Run
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Clone the project
+```bash
+git clone https://github.com/chethanyan/student-task-manager-frontend.git
+cd student-task-manager-frontend
+```
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Start the app
+```bash
+npm run dev
+```
+App runs on `http://localhost:5173`
+
+> Make sure the backend is running on `http://localhost:8080`
+
+---
+
+---
+
+## 🔐 Auth Flow
+
+### Register
+### Register
+
+POST http://localhost:8080/api/auth/register
+Body: { username, password }
+
+
+### Login
+
+POST http://localhost:8080/api/auth/login
+Body: { username, password }
+Response: { token: "eyJhbGci..." }
+→ Token saved to localStorage
+### Protected Requests
+Every task API call automatically sends:
+Authorization: Bearer <token>
+This is handled by an **Axios interceptor** in `taskApi.js` —
+no manual token attachment needed anywhere in the app.
+
+---
+
+## 📡 API Calls
+
+### Auth — `src/api/authApi.js`
+| Function | Method | Endpoint |
+|---|---|---|
+| `register(data)` | POST | /api/auth/register |
+| `login(data)` | POST | /api/auth/login |
+
+### Tasks — `src/api/taskApi.js`
+| Function | Method | Endpoint | Auth |
+|---|---|---|---|
+| `getTasks()` | GET | /api/tasks | 🔒 JWT |
+| `createTask(task)` | POST | /api/tasks | 🔒 JWT |
+| `updateTask(id, task)` | PUT | /api/tasks/:id | 🔒 JWT |
+| `deleteTask(id)` | DELETE | /api/tasks/:id | 🔒 JWT |
+
+---
+
+## ✅ Features
+
+- 🔐 JWT Login & Register
+- 🏠 Home Dashboard with task stats
+- 📚 Study Area — subject progress, tasks & notes
+- ➕ Add, ✏️ Edit, ❌ Delete tasks
+- 🔄 Auto token injection via Axios interceptor
+- 💼 Work, 🏢 Business, 🏠 Personal areas (coming soon)
+
+---
+
+## 📦 Available Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Run in development mode |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint checks |
+
+---
+
+## 🔗 Related Repository
+
+Backend → [student-task-manager-backend](https://github.com/chethanyan/student-task-manager)
+
+---
+
+## 👨‍💻 Developer
+
+Built by **chethanyan**
+
+
